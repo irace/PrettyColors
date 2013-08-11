@@ -19,6 +19,8 @@
 		9388C07B17B812EC006886C1 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9388C06317B812EB006886C1 /* UIKit.framework */; };
 		9388C08317B812EC006886C1 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9388C08117B812EC006886C1 /* InfoPlist.strings */; };
 		9388C08517B812EC006886C1 /* Pretty_ColorsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9388C08417B812EC006886C1 /* Pretty_ColorsTests.m */; };
+		9388C09017B8142C006886C1 /* PCColorPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9388C08F17B8142C006886C1 /* PCColorPickerViewController.m */; };
+		9388C09317B82976006886C1 /* PCColorPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9388C09217B82976006886C1 /* PCColorPickerView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,6 +50,10 @@
 		9388C08017B812EC006886C1 /* Pretty ColorsTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Pretty ColorsTests-Info.plist"; sourceTree = "<group>"; };
 		9388C08217B812EC006886C1 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		9388C08417B812EC006886C1 /* Pretty_ColorsTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Pretty_ColorsTests.m; sourceTree = "<group>"; };
+		9388C08E17B8142C006886C1 /* PCColorPickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PCColorPickerViewController.h; sourceTree = "<group>"; };
+		9388C08F17B8142C006886C1 /* PCColorPickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PCColorPickerViewController.m; sourceTree = "<group>"; };
+		9388C09117B82976006886C1 /* PCColorPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PCColorPickerView.h; sourceTree = "<group>"; };
+		9388C09217B82976006886C1 /* PCColorPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PCColorPickerView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -109,8 +115,12 @@
 			children = (
 				9388C06E17B812EB006886C1 /* PCAppDelegate.h */,
 				9388C06F17B812EB006886C1 /* PCAppDelegate.m */,
+				9388C08E17B8142C006886C1 /* PCColorPickerViewController.h */,
+				9388C08F17B8142C006886C1 /* PCColorPickerViewController.m */,
 				9388C07117B812EB006886C1 /* Images.xcassets */,
 				9388C06617B812EB006886C1 /* Supporting Files */,
+				9388C09117B82976006886C1 /* PCColorPickerView.h */,
+				9388C09217B82976006886C1 /* PCColorPickerView.m */,
 			);
 			path = "Pretty Colors";
 			sourceTree = "<group>";
@@ -241,7 +251,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				9388C06C17B812EB006886C1 /* main.m in Sources */,
+				9388C09317B82976006886C1 /* PCColorPickerView.m in Sources */,
 				9388C07017B812EB006886C1 /* PCAppDelegate.m in Sources */,
+				9388C09017B8142C006886C1 /* PCColorPickerViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
