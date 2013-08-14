@@ -14,11 +14,16 @@ static CGFloat const PCColorPickerViewContentSizeScale = 3;
 static CGFloat const PCColorPickerViewMinimumZoomScale = 0;
 static CGFloat const PCColorPickerViewMaximumZoomScale = 4;
 
+static CGFloat const PCColorPickerViewHexLabelAlpha = 0.25;
+static CGFloat const PCColorPickerViewHexLabelFontSize = 60;
+static NSString * const PCColorPickerViewHexLabelFontName = @"CourierNewPS-BoldMT";
+
 @interface PCColorPickerView() <UIScrollViewDelegate>
 
 @property (nonatomic, strong) UIScrollView *scrollView;
 @property (nonatomic, strong) UIScrollView *zoomView;
 @property (nonatomic, strong) UIView *viewForZoomingInScrollView;
+@property (nonatomic, strong) UILabel *hexLabel;
 
 @property (nonatomic) CGFloat maxScrollViewXOffset;
 @property (nonatomic) CGFloat maxScrollViewYOffset;
@@ -27,6 +32,8 @@ static CGFloat const PCColorPickerViewMaximumZoomScale = 4;
 @property (nonatomic) CGFloat hue;
 @property (nonatomic) CGFloat saturation;
 @property (nonatomic) CGFloat brightness;
+
+@property (nonatomic) BOOL recalculateOnContentOffsetChange;
 
 @end
 
@@ -41,14 +48,14 @@ static CGFloat const PCColorPickerViewMaximumZoomScale = 4;
     self.saturation = randomFloat();
     self.brightness = randomFloat();
     
-    self.scrollView.delegate = nil;
+    self.recalculateOnContentOffsetChange = NO;
     
     self.scrollView.contentOffset = CGPointMake(self.hue * self.maxScrollViewXOffset,
                                                 self.saturation * self.maxScrollViewYOffset);;
     
     self.scrollView.zoomScale = self.brightness * self.zoomScaleRange;
     
-    self.scrollView.delegate = self;
+    self.recalculateOnContentOffsetChange = YES;
     
     [self updateBackgroundColor];
 }
@@ -69,7 +76,8 @@ static CGFloat const PCColorPickerViewMaximumZoomScale = 4;
 
 - (id)initWithFrame:(CGRect)frame {
     if (self = [super initWithFrame:frame]) {
-
+        self.recalculateOnContentOffsetChange = YES;
+        
         self.scrollView = [[UIScrollView alloc] init];
         self.scrollView.delegate = self;
         self.scrollView.bounces = NO;
@@ -90,6 +98,11 @@ static CGFloat const PCColorPickerViewMaximumZoomScale = 4;
         // Exists solely because UIScrollViewDelegate `viewForZoomingInScrollView:` requires a subview be returned
         self.viewForZoomingInScrollView = [[UIView alloc] init];
         [self.zoomView addSubview:self.viewForZoomingInScrollView];
+        
+        self.hexLabel = [[UILabel alloc] init];
+        self.hexLabel.font = [UIFont fontWithName:PCColorPickerViewHexLabelFontName
+                                             size:PCColorPickerViewHexLabelFontSize];
+        [self addSubview:self.hexLabel];
         
         [self randomizeBackgroundColor];
         
@@ -122,6 +135,8 @@ static CGFloat const PCColorPickerViewMaximumZoomScale = 4;
     
     self.maxScrollViewXOffset = scrollViewContentSize.width - scrollViewSize.width;
     self.maxScrollViewYOffset = scrollViewContentSize.height - scrollViewSize.height;
+    
+    self.hexLabel.center = self.center;
 }
 
 #pragma mark - KVO
@@ -142,23 +157,47 @@ static CGFloat const PCColorPickerViewMaximumZoomScale = 4;
 - (void)updateBackgroundColor {
     NSLog(@"Hue: %f, saturation: %f, brightness: %f", self.hue, self.saturation, self.brightness);
     
-    self.scrollView.backgroundColor = [[UIColor alloc] initWithHue:self.hue saturation:self.saturation
-                                                        brightness:self.brightness alpha:1];
+    UIColor *color = [[UIColor alloc] initWithHue:self.hue saturation:self.saturation
+                                       brightness:self.brightness alpha:1];
+    
+    self.backgroundColor = color;
+    
+    self.hexLabel.text = [@"#" stringByAppendingString:hexCodeForColor(color)];
+    [self.hexLabel sizeToFit];
+    
+    self.hexLabel.textColor = [UIColor colorWithHue:0 saturation:0 brightness:1 - round(self.brightness)
+                                              alpha:PCColorPickerViewHexLabelAlpha];
+}
+
+NSString *hexCodeForColor(UIColor *color) {
+    CGFloat red;
+    CGFloat green;
+    CGFloat blue;
+    
+    [color getRed:&red green:&green blue:&blue alpha:nil];
+    
+    NSString *(^floatToHexString)(CGFloat) = ^(CGFloat floatValue) {
+        return [NSString stringWithFormat:@"%02x", (NSInteger)(255 * floatValue)];
+    };
+    
+    return [@[floatToHexString(red), floatToHexString(green), floatToHexString(blue)] componentsJoinedByString:@""];
 }
 
 #pragma mark - UIScrollViewDelegate
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    if (scrollView == self.scrollView && !CGRectIsEmpty(self.scrollView.frame)) {
-        CGFloat xOffset = scrollView.contentOffset.x;
-        CGFloat yOffset = scrollView.contentOffset.y;
-        
-        CGRect zoomViewFrame = self.zoomView.frame;
-        zoomViewFrame.origin = CGPointMake(xOffset, yOffset);
-        self.zoomView.frame = zoomViewFrame;
-        
-        self.hue = xOffset/self.maxScrollViewXOffset;
-        self.saturation = yOffset/self.maxScrollViewYOffset;
+    if (scrollView == self.scrollView) {
+        if (self.maxScrollViewYOffset > 0 && self.maxScrollViewXOffset > 0) {
+            CGFloat xOffset = scrollView.contentOffset.x;
+            CGFloat yOffset = scrollView.contentOffset.y;
+            
+            CGRect zoomViewFrame = self.zoomView.frame;
+            zoomViewFrame.origin = CGPointMake(xOffset, yOffset);
+            self.zoomView.frame = zoomViewFrame;
+            
+            self.hue = xOffset/self.maxScrollViewXOffset;
+            self.saturation = yOffset/self.maxScrollViewYOffset;
+        }
     }
 }
 

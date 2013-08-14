@@ -9,6 +9,9 @@
 #import "PCColorPickerViewController.h"
 #import "PCColorPickerView.h"
 
+static CGFloat const PCColorPickerViewControllerMaxTintColorBrightness = 0.6;
+static void * PCColorPickerViewControllerKVOContext = &PCColorPickerViewControllerKVOContext;
+
 @interface PCColorPickerViewController()
 
 @property (nonatomic, strong) PCColorPickerView *colorPicker;
@@ -17,6 +20,12 @@
 
 @implementation PCColorPickerViewController
 
+#pragma mark - NSObject
+
+- (void)dealloc {
+    [self.colorPicker removeObserver:self forKeyPath:@"backgroundColor" context:PCColorPickerViewControllerKVOContext];
+}
+
 #pragma mark - UIViewController
 
 - (void)viewDidLoad {
@@ -24,7 +33,10 @@
     
     self.colorPicker = [[PCColorPickerView alloc] init];
     [self.view addSubview:self.colorPicker];
-    [self.colorPicker addObserver:self forKeyPath:@"backgroundColor" options:0 context:NULL];
+    
+    [self updateTintColor];
+    
+    [self.colorPicker addObserver:self forKeyPath:@"backgroundColor" options:0 context:PCColorPickerViewControllerKVOContext];
     
 //    [self.view addConstraints:@[
 //        [NSLayoutConstraint constraintWithItem:self.view attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual
@@ -38,14 +50,45 @@
                                                             target:self.colorPicker action:@selector(randomizeBackgroundColor)]]];
 }
 
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
-    self.navigationController.toolbar.tintColor = self.colorPicker.backgroundColor;
-}
-
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
     self.colorPicker.frame = self.view.bounds;
+}
+
+#pragma mark - Private
+
+- (void)updateTintColor {
+    UIColor *tintColor = colorWithMaxBrightness(self.colorPicker.backgroundColor,
+                                                PCColorPickerViewControllerMaxTintColorBrightness);
+    
+    self.navigationController.toolbar.tintColor = tintColor;
+}
+
+UIColor *colorWithMaxBrightness(UIColor *color, CGFloat maxBrightness) {
+    CGFloat hue;
+    CGFloat saturation;
+    CGFloat brightness;
+    
+    [color getHue:&hue saturation:&saturation brightness:&brightness alpha:nil];
+    
+    if (brightness > maxBrightness) {
+        brightness = maxBrightness;
+    }
+    
+    return [UIColor colorWithHue:hue saturation:saturation brightness:brightness alpha:1];
+}
+
+#pragma mark - KVO
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
+    if (context == PCColorPickerViewControllerKVOContext) {
+        if (object == self.colorPicker && [keyPath isEqualToString:@"backgroundColor"]) {
+            [self updateTintColor];
+        }
+    } else {
+        [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
+    }
 }
 
 @end
