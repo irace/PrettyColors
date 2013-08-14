@@ -11,7 +11,6 @@
 // TODO: Collection view for saving
 // TODO: Tumblr integration
 // TODO: Update status bar color if too dark
-// TODO: Copy label
 
 @interface PCColorPickerView : UIView
 

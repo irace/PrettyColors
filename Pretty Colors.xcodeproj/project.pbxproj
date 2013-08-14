@@ -21,6 +21,7 @@
 		9388C08517B812EC006886C1 /* Pretty_ColorsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9388C08417B812EC006886C1 /* Pretty_ColorsTests.m */; };
 		9388C09017B8142C006886C1 /* PCColorPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9388C08F17B8142C006886C1 /* PCColorPickerViewController.m */; };
 		9388C09317B82976006886C1 /* PCColorPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9388C09217B82976006886C1 /* PCColorPickerView.m */; };
+		93CBE31B17BB30BD008BE50A /* PCCopyableLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 93CBE31A17BB30BD008BE50A /* PCCopyableLabel.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -54,6 +55,8 @@
 		9388C08F17B8142C006886C1 /* PCColorPickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PCColorPickerViewController.m; sourceTree = "<group>"; };
 		9388C09117B82976006886C1 /* PCColorPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PCColorPickerView.h; sourceTree = "<group>"; };
 		9388C09217B82976006886C1 /* PCColorPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PCColorPickerView.m; sourceTree = "<group>"; };
+		93CBE31917BB30BD008BE50A /* PCCopyableLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PCCopyableLabel.h; sourceTree = "<group>"; };
+		93CBE31A17BB30BD008BE50A /* PCCopyableLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PCCopyableLabel.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -121,6 +124,8 @@
 				9388C06617B812EB006886C1 /* Supporting Files */,
 				9388C09117B82976006886C1 /* PCColorPickerView.h */,
 				9388C09217B82976006886C1 /* PCColorPickerView.m */,
+				93CBE31917BB30BD008BE50A /* PCCopyableLabel.h */,
+				93CBE31A17BB30BD008BE50A /* PCCopyableLabel.m */,
 			);
 			path = "Pretty Colors";
 			sourceTree = "<group>";
@@ -253,6 +258,7 @@
 				9388C06C17B812EB006886C1 /* main.m in Sources */,
 				9388C09317B82976006886C1 /* PCColorPickerView.m in Sources */,
 				9388C07017B812EB006886C1 /* PCAppDelegate.m in Sources */,
+				93CBE31B17BB30BD008BE50A /* PCCopyableLabel.m in Sources */,
 				9388C09017B8142C006886C1 /* PCColorPickerViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -450,6 +456,7 @@
 				9388C08A17B812EC006886C1 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		9388C08B17B812EC006886C1 /* Build configuration list for PBXNativeTarget "Pretty ColorsTests" */ = {
 			isa = XCConfigurationList;
@@ -458,6 +465,7 @@
 				9388C08D17B812EC006886C1 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

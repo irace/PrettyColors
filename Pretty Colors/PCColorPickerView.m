@@ -8,6 +8,8 @@
 
 #import "PCColorPickerView.h"
 
+#import "PCCopyableLabel.h"
+
 static void * PCColorPickerViewKVOContext = &PCColorPickerViewKVOContext;
 
 static CGFloat const PCColorPickerViewContentSizeScale = 3;
@@ -23,7 +25,9 @@ static NSString * const PCColorPickerViewHexLabelFontName = @"CourierNewPS-BoldM
 @property (nonatomic, strong) UIScrollView *scrollView;
 @property (nonatomic, strong) UIScrollView *zoomView;
 @property (nonatomic, strong) UIView *viewForZoomingInScrollView;
+
 @property (nonatomic, strong) UILabel *hexLabel;
+@property (nonatomic, strong) UIButton *infoButton;
 
 @property (nonatomic) CGFloat maxScrollViewXOffset;
 @property (nonatomic) CGFloat maxScrollViewYOffset;
@@ -99,10 +103,14 @@ static NSString * const PCColorPickerViewHexLabelFontName = @"CourierNewPS-BoldM
         self.viewForZoomingInScrollView = [[UIView alloc] init];
         [self.zoomView addSubview:self.viewForZoomingInScrollView];
         
-        self.hexLabel = [[UILabel alloc] init];
+        self.hexLabel = [[PCCopyableLabel alloc] init];
+        self.hexLabel.userInteractionEnabled = YES;
         self.hexLabel.font = [UIFont fontWithName:PCColorPickerViewHexLabelFontName
                                              size:PCColorPickerViewHexLabelFontSize];
         [self addSubview:self.hexLabel];
+        
+        self.infoButton = [UIButton buttonWithType:UIButtonTypeInfoDark];
+        [self addSubview:self.infoButton];
         
         [self randomizeBackgroundColor];
         
@@ -155,14 +163,12 @@ static NSString * const PCColorPickerViewHexLabelFontName = @"CourierNewPS-BoldM
 #pragma mark - Private
 
 - (void)updateBackgroundColor {
-    NSLog(@"Hue: %f, saturation: %f, brightness: %f", self.hue, self.saturation, self.brightness);
-    
     UIColor *color = [[UIColor alloc] initWithHue:self.hue saturation:self.saturation
                                        brightness:self.brightness alpha:1];
     
     self.backgroundColor = color;
     
-    self.hexLabel.text = [@"#" stringByAppendingString:hexCodeForColor(color)];
+    self.hexLabel.text = [@"#" stringByAppendingString:[hexCodeForColor(color) uppercaseString]];
     [self.hexLabel sizeToFit];
     
     self.hexLabel.textColor = [UIColor colorWithHue:0 saturation:0 brightness:1 - round(self.brightness)
