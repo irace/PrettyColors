@@ -15,17 +15,10 @@
 - (id)initWithFrame:(CGRect)frame {
     if (self = [super initWithFrame:frame]) {
         self.userInteractionEnabled = YES;
-        
-        SEL showMenuSelector = @selector(showMenu);
 
         UIGestureRecognizer *longPressRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self
-                                                                                                 action:showMenuSelector];
+                                                                                                 action:@selector(showMenu)];
         [self addGestureRecognizer:longPressRecognizer];
-#warning - This doesn't work, try delegate
-        UIGestureRecognizer *tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self
-                                                                                     action:showMenuSelector];
-        [tapRecognizer requireGestureRecognizerToFail:longPressRecognizer];
-        [self addGestureRecognizer:tapRecognizer];
     }
     
     return self;
@@ -40,12 +33,18 @@
 #pragma mark - Actions
 
 - (void)showMenu {
-    [self becomeFirstResponder];
-
     UIMenuController *menuController = [UIMenuController sharedMenuController];
-    menuController.menuItems = @[[[UIMenuItem alloc] initWithTitle:@"Copy" action:@selector(copyText)]];
-    [menuController setTargetRect:CGRectMake(floorf(CGRectGetWidth(self.bounds)/2), 0, 0, 0) inView:self];
-    [menuController setMenuVisible:YES animated:YES];
+    
+    if ([UIMenuController sharedMenuController].isMenuVisible) {
+        [menuController setMenuVisible:NO animated:YES];
+        
+    } else {
+        [self becomeFirstResponder];
+        
+        menuController.menuItems = @[[[UIMenuItem alloc] initWithTitle:@"Copy" action:@selector(copyText)]];
+        [menuController setTargetRect:CGRectMake(floorf(CGRectGetWidth(self.bounds)/2), 0, 0, 0) inView:self];
+        [menuController setMenuVisible:YES animated:YES];
+    }
 }
 
 - (void)copyText {

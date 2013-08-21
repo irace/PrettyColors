@@ -23,7 +23,13 @@ static NSString * const PCColorPickerViewHexLabelFontName = @"CourierNewPS-BoldM
 @interface PCColorPickerView() <UIScrollViewDelegate>
 
 @property (nonatomic, strong) UIScrollView *scrollView;
+
+/// Superview for `zoomView` and `hexLabel`, which should stay in place despite being UIScrollView subviews
+@property (nonatomic, strong) UIView *stationaryView;
+
 @property (nonatomic, strong) UIScrollView *zoomView;
+
+/// Exists solely because UIScrollViewDelegate `viewForZoomingInScrollView:` requires a subview be returned
 @property (nonatomic, strong) UIView *viewForZoomingInScrollView;
 
 @property (nonatomic, strong) UILabel *hexLabel;
@@ -37,6 +43,7 @@ static NSString * const PCColorPickerViewHexLabelFontName = @"CourierNewPS-BoldM
 @property (nonatomic) CGFloat saturation;
 @property (nonatomic) CGFloat brightness;
 
+/// Prevent programmatic changes to content offset from triggering UIScrollViewDelegate methods
 @property (nonatomic) BOOL recalculateOnContentOffsetChange;
 
 @end
@@ -45,6 +52,7 @@ static NSString * const PCColorPickerViewHexLabelFontName = @"CourierNewPS-BoldM
 
 - (void)randomizeBackgroundColor {
     CGFloat (^randomFloat)() = ^ {
+        // http://stackoverflow.com/questions/5172421/generate-a-random-float-between-0-and-1
         return ((CGFloat)arc4random()/0x100000000);
     };
     
@@ -90,24 +98,25 @@ static NSString * const PCColorPickerViewHexLabelFontName = @"CourierNewPS-BoldM
         self.scrollView.decelerationRate = UIScrollViewDecelerationRateFast;
         [self addSubview:self.scrollView];
         
+        self.stationaryView = [[UIView alloc] init];
+        [self.scrollView addSubview:self.stationaryView];
+        
         self.zoomView = [[UIScrollView alloc] init];
         self.zoomView.delegate = self;
         self.zoomView.minimumZoomScale = PCColorPickerViewMinimumZoomScale;
         self.zoomView.maximumZoomScale = PCColorPickerViewMaximumZoomScale;
         [self.zoomView.panGestureRecognizer requireGestureRecognizerToFail:self.scrollView.panGestureRecognizer];
-        [self.scrollView addSubview:self.zoomView];
+        [self.stationaryView addSubview:self.zoomView];
         
         self.zoomScaleRange = self.zoomView.maximumZoomScale - self.zoomView.minimumZoomScale;
         
-        // Exists solely because UIScrollViewDelegate `viewForZoomingInScrollView:` requires a subview be returned
         self.viewForZoomingInScrollView = [[UIView alloc] init];
         [self.zoomView addSubview:self.viewForZoomingInScrollView];
         
         self.hexLabel = [[PCCopyableLabel alloc] init];
-        self.hexLabel.userInteractionEnabled = YES;
         self.hexLabel.font = [UIFont fontWithName:PCColorPickerViewHexLabelFontName
                                              size:PCColorPickerViewHexLabelFontSize];
-        [self addSubview:self.hexLabel];
+        [self.stationaryView addSubview:self.hexLabel];
         
         self.infoButton = [UIButton buttonWithType:UIButtonTypeInfoDark];
         [self addSubview:self.infoButton];
@@ -128,10 +137,12 @@ static NSString * const PCColorPickerViewHexLabelFontName = @"CourierNewPS-BoldM
 
 - (void)layoutSubviews {
     [super layoutSubviews];
-    
-    self.viewForZoomingInScrollView.frame = self.bounds;
-    self.zoomView.frame = self.bounds;
+
     self.scrollView.frame = self.bounds;
+    self.stationaryView.frame = self.bounds;
+    
+    self.zoomView.frame = self.bounds;
+    self.viewForZoomingInScrollView.frame = self.bounds;
     
     CGSize scrollViewSize = self.scrollView.bounds.size;
     
@@ -144,7 +155,8 @@ static NSString * const PCColorPickerViewHexLabelFontName = @"CourierNewPS-BoldM
     self.maxScrollViewXOffset = scrollViewContentSize.width - scrollViewSize.width;
     self.maxScrollViewYOffset = scrollViewContentSize.height - scrollViewSize.height;
     
-    self.hexLabel.center = self.center;
+#warning - Initial frame is off
+    self.hexLabel.center = self.stationaryView.center;
 }
 
 #pragma mark - KVO
@@ -176,6 +188,8 @@ static NSString * const PCColorPickerViewHexLabelFontName = @"CourierNewPS-BoldM
 }
 
 NSString *hexCodeForColor(UIColor *color) {
+    // http://stackoverflow.com/questions/10880396/how-to-get-hexcode-based-on-the-rgb-values-in-iphoneios
+    
     CGFloat red;
     CGFloat green;
     CGFloat blue;
@@ -197,19 +211,23 @@ NSString *hexCodeForColor(UIColor *color) {
             CGFloat xOffset = scrollView.contentOffset.x;
             CGFloat yOffset = scrollView.contentOffset.y;
             
-            CGRect zoomViewFrame = self.zoomView.frame;
-            zoomViewFrame.origin = CGPointMake(xOffset, yOffset);
-            self.zoomView.frame = zoomViewFrame;
+            // Re-calculate hue and saturation
             
             self.hue = xOffset/self.maxScrollViewXOffset;
             self.saturation = yOffset/self.maxScrollViewYOffset;
+            
+            // Ensure stationary view frame does not change
+            
+            CGRect stationaryViewFrame = self.stationaryView.frame;
+            stationaryViewFrame.origin = CGPointMake(xOffset, yOffset);
+            self.stationaryView.frame = stationaryViewFrame;
         }
     }
 }
 
-- (void)scrollViewDidEndZooming:(UIScrollView *)scrollView withView:(UIView *)view atScale:(CGFloat)scale {
+- (void)scrollViewDidZoom:(UIScrollView *)scrollView {
     if (scrollView == self.zoomView) {
-        self.brightness = scale/self.zoomScaleRange;
+        self.brightness = scrollView.zoomScale/self.zoomScaleRange;
     }
 }
 

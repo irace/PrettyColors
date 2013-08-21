@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		93231E9917C4600B00AFA93E /* PCSavedColorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93231E9817C4600B00AFA93E /* PCSavedColorViewController.m */; };
+		93231E9C17C4640400AFA93E /* PCSavedColorCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 93231E9B17C4640400AFA93E /* PCSavedColorCell.m */; };
 		9388C06017B812EB006886C1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9388C05F17B812EB006886C1 /* Foundation.framework */; };
 		9388C06217B812EB006886C1 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9388C06117B812EB006886C1 /* CoreGraphics.framework */; };
 		9388C06417B812EB006886C1 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9388C06317B812EB006886C1 /* UIKit.framework */; };
@@ -35,6 +37,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		93231E9717C4600B00AFA93E /* PCSavedColorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PCSavedColorViewController.h; sourceTree = "<group>"; };
+		93231E9817C4600B00AFA93E /* PCSavedColorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PCSavedColorViewController.m; sourceTree = "<group>"; };
+		93231E9A17C4640400AFA93E /* PCSavedColorCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PCSavedColorCell.h; sourceTree = "<group>"; };
+		93231E9B17C4640400AFA93E /* PCSavedColorCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PCSavedColorCell.m; sourceTree = "<group>"; };
 		9388C05C17B812EB006886C1 /* Pretty Colors.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Pretty Colors.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9388C05F17B812EB006886C1 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		9388C06117B812EB006886C1 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -118,14 +124,18 @@
 			children = (
 				9388C06E17B812EB006886C1 /* PCAppDelegate.h */,
 				9388C06F17B812EB006886C1 /* PCAppDelegate.m */,
-				9388C08E17B8142C006886C1 /* PCColorPickerViewController.h */,
-				9388C08F17B8142C006886C1 /* PCColorPickerViewController.m */,
-				9388C07117B812EB006886C1 /* Images.xcassets */,
-				9388C06617B812EB006886C1 /* Supporting Files */,
 				9388C09117B82976006886C1 /* PCColorPickerView.h */,
 				9388C09217B82976006886C1 /* PCColorPickerView.m */,
+				9388C08E17B8142C006886C1 /* PCColorPickerViewController.h */,
+				9388C08F17B8142C006886C1 /* PCColorPickerViewController.m */,
 				93CBE31917BB30BD008BE50A /* PCCopyableLabel.h */,
 				93CBE31A17BB30BD008BE50A /* PCCopyableLabel.m */,
+				93231E9A17C4640400AFA93E /* PCSavedColorCell.h */,
+				93231E9B17C4640400AFA93E /* PCSavedColorCell.m */,
+				93231E9717C4600B00AFA93E /* PCSavedColorViewController.h */,
+				93231E9817C4600B00AFA93E /* PCSavedColorViewController.m */,
+				9388C07117B812EB006886C1 /* Images.xcassets */,
+				9388C06617B812EB006886C1 /* Supporting Files */,
 			);
 			path = "Pretty Colors";
 			sourceTree = "<group>";
@@ -257,9 +267,11 @@
 			files = (
 				9388C06C17B812EB006886C1 /* main.m in Sources */,
 				9388C09317B82976006886C1 /* PCColorPickerView.m in Sources */,
+				93231E9C17C4640400AFA93E /* PCSavedColorCell.m in Sources */,
 				9388C07017B812EB006886C1 /* PCAppDelegate.m in Sources */,
 				93CBE31B17BB30BD008BE50A /* PCCopyableLabel.m in Sources */,
 				9388C09017B8142C006886C1 /* PCColorPickerViewController.m in Sources */,
+				93231E9917C4600B00AFA93E /* PCSavedColorViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

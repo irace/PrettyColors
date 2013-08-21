@@ -7,7 +7,9 @@
 //
 
 #import "PCColorPickerViewController.h"
+
 #import "PCColorPickerView.h"
+#import "PCSavedColorViewController.h"
 
 static CGFloat const PCColorPickerViewControllerMaxTintColorBrightness = 0.6;
 static void * PCColorPickerViewControllerKVOContext = &PCColorPickerViewControllerKVOContext;
@@ -15,6 +17,7 @@ static void * PCColorPickerViewControllerKVOContext = &PCColorPickerViewControll
 @interface PCColorPickerViewController()
 
 @property (nonatomic, strong) PCColorPickerView *colorPicker;
+@property (nonatomic) UIStatusBarStyle statusBarStyle;
 
 @end
 
@@ -34,7 +37,7 @@ static void * PCColorPickerViewControllerKVOContext = &PCColorPickerViewControll
     self.colorPicker = [[PCColorPickerView alloc] init];
     [self.view addSubview:self.colorPicker];
     
-    [self updateTintColor];
+    [self backgroundColorUpdated];
     
     [self.colorPicker addObserver:self forKeyPath:@"backgroundColor" options:0 context:PCColorPickerViewControllerKVOContext];
     
@@ -46,37 +49,68 @@ static void * PCColorPickerViewControllerKVOContext = &PCColorPickerViewControll
 //                                        toItem:self.colorPicker attribute:NSLayoutAttributeHeight multiplier:1 constant:0]
 //        ]];
     
-    [self setToolbarItems:@[[[UIBarButtonItem alloc] initWithTitle:@"Random" style:UIBarButtonItemStylePlain
-                                                            target:self.colorPicker action:@selector(randomizeBackgroundColor)]]];
+    UIBarButtonItem *(^barButton)(NSString *, id, SEL) = ^ (NSString *title, id target, SEL action) {
+        return [[UIBarButtonItem alloc] initWithTitle:title style:UIBarButtonItemStylePlain target:target action:action];
+    };
+
+    self.toolbarItems = @[barButton(@"Random", self.colorPicker, @selector(randomizeBackgroundColor)),
+                          [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil],
+                          barButton(@"Save", self, @selector(save))];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
+    self.navigationController.toolbarHidden = NO;
+    
     self.colorPicker.frame = self.view.bounds;
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    
+    self.navigationController.toolbarHidden = YES;
+}
+
+- (UIStatusBarStyle)preferredStatusBarStyle {
+    return self.statusBarStyle;
+}
+
+#pragma mark - Actions
+
+- (void)save {
+    [self.navigationController pushViewController:[[PCSavedColorViewController alloc] init] animated:YES];
 }
 
 #pragma mark - Private
 
-- (void)updateTintColor {
-    UIColor *tintColor = colorWithMaxBrightness(self.colorPicker.backgroundColor,
-                                                PCColorPickerViewControllerMaxTintColorBrightness);
-    
-    self.navigationController.toolbar.tintColor = tintColor;
-}
-
-UIColor *colorWithMaxBrightness(UIColor *color, CGFloat maxBrightness) {
+- (void)backgroundColorUpdated {
     CGFloat hue;
     CGFloat saturation;
     CGFloat brightness;
     
-    [color getHue:&hue saturation:&saturation brightness:&brightness alpha:nil];
+    [self.colorPicker.backgroundColor getHue:&hue saturation:&saturation brightness:&brightness alpha:nil];
     
-    if (brightness > maxBrightness) {
-        brightness = maxBrightness;
+    // Update status bar style
+    
+    UIStatusBarStyle statusBarStyle = UIStatusBarStyleDefault;
+    
+    if (brightness > 0.5) {
+        statusBarStyle = UIStatusBarStyleLightContent;
     }
     
-    return [UIColor colorWithHue:hue saturation:saturation brightness:brightness alpha:1];
+    if (statusBarStyle != self.statusBarStyle) {
+        self.statusBarStyle = statusBarStyle;
+        [self setNeedsStatusBarAppearanceUpdate];
+    }
+    
+    // Update toolbar tint color
+    
+    UIColor *tintColor = [UIColor colorWithHue:hue saturation:saturation
+                                    brightness:MIN(brightness, PCColorPickerViewControllerMaxTintColorBrightness)
+                                         alpha:1];
+    
+    self.navigationController.toolbar.tintColor = tintColor;
 }
 
 #pragma mark - KVO
@@ -84,7 +118,7 @@ UIColor *colorWithMaxBrightness(UIColor *color, CGFloat maxBrightness) {
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
     if (context == PCColorPickerViewControllerKVOContext) {
         if (object == self.colorPicker && [keyPath isEqualToString:@"backgroundColor"]) {
-            [self updateTintColor];
+            [self backgroundColorUpdated];
         }
     } else {
         [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
