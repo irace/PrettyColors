@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>0CAD0BAB-DC95-4199-A78A-14EE8124C316</string>
+	<key>IDESourceControlProjectName</key>
+	<string>PrettyColors</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>EE991CE8-E9E2-4A74-A9EA-0BC0CFA0D291</key>
+		<string>ssh://github.com/irace/PrettyColors.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>PrettyColors.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>EE991CE8-E9E2-4A74-A9EA-0BC0CFA0D291</key>
+		<string>..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>ssh://github.com/irace/PrettyColors.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>EE991CE8-E9E2-4A74-A9EA-0BC0CFA0D291</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>EE991CE8-E9E2-4A74-A9EA-0BC0CFA0D291</string>
+			<key>IDESourceControlWCCName</key>
+			<string>PrettyColors</string>
+		</dict>
+	</array>
+</dict>
+</plist>

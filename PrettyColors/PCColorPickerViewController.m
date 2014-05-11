@@ -17,7 +17,6 @@ static void * PCColorPickerViewControllerKVOContext = &PCColorPickerViewControll
 @interface PCColorPickerViewController()
 
 @property (nonatomic, strong) PCColorPickerView *colorPicker;
-@property (nonatomic) UIStatusBarStyle statusBarStyle;
 
 @end
 
@@ -72,10 +71,6 @@ static void * PCColorPickerViewControllerKVOContext = &PCColorPickerViewControll
     self.navigationController.toolbarHidden = YES;
 }
 
-- (UIStatusBarStyle)preferredStatusBarStyle {
-    return self.statusBarStyle;
-}
-
 #pragma mark - Actions
 
 - (void)save {
@@ -90,19 +85,6 @@ static void * PCColorPickerViewControllerKVOContext = &PCColorPickerViewControll
     CGFloat brightness;
     
     [self.colorPicker.backgroundColor getHue:&hue saturation:&saturation brightness:&brightness alpha:nil];
-    
-    // Update status bar style
-    
-    UIStatusBarStyle statusBarStyle = UIStatusBarStyleDefault;
-    
-    if (brightness > 0.5) {
-        statusBarStyle = UIStatusBarStyleLightContent;
-    }
-    
-    if (statusBarStyle != self.statusBarStyle) {
-        self.statusBarStyle = statusBarStyle;
-        [self setNeedsStatusBarAppearanceUpdate];
-    }
     
     // Update toolbar tint color
     
