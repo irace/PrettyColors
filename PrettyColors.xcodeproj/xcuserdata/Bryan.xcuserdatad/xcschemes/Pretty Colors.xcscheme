@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "9388C05B17B812EB006886C1"
-               BuildableName = "Pretty Colors.app"
-               BlueprintName = "Pretty Colors"
-               ReferencedContainer = "container:Pretty Colors.xcodeproj">
+               BuildableName = "PrettyColors.app"
+               BlueprintName = "PrettyColors"
+               ReferencedContainer = "container:PrettyColors.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -34,8 +34,8 @@
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "9388C07617B812EC006886C1"
                BuildableName = "Pretty ColorsTests.xctest"
-               BlueprintName = "Pretty ColorsTests"
-               ReferencedContainer = "container:Pretty Colors.xcodeproj">
+               BlueprintName = "PrettyColorsTests"
+               ReferencedContainer = "container:PrettyColors.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -43,9 +43,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "9388C05B17B812EB006886C1"
-            BuildableName = "Pretty Colors.app"
-            BlueprintName = "Pretty Colors"
-            ReferencedContainer = "container:Pretty Colors.xcodeproj">
+            BuildableName = "PrettyColors.app"
+            BlueprintName = "PrettyColors"
+            ReferencedContainer = "container:PrettyColors.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </TestAction>
@@ -62,9 +62,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "9388C05B17B812EB006886C1"
-            BuildableName = "Pretty Colors.app"
-            BlueprintName = "Pretty Colors"
-            ReferencedContainer = "container:Pretty Colors.xcodeproj">
+            BuildableName = "PrettyColors.app"
+            BlueprintName = "PrettyColors"
+            ReferencedContainer = "container:PrettyColors.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -80,9 +80,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "9388C05B17B812EB006886C1"
-            BuildableName = "Pretty Colors.app"
-            BlueprintName = "Pretty Colors"
-            ReferencedContainer = "container:Pretty Colors.xcodeproj">
+            BuildableName = "PrettyColors.app"
+            BlueprintName = "PrettyColors"
+            ReferencedContainer = "container:PrettyColors.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

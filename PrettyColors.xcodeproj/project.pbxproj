@@ -16,47 +16,28 @@
 		9388C06C17B812EB006886C1 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 9388C06B17B812EB006886C1 /* main.m */; };
 		9388C07017B812EB006886C1 /* PCAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9388C06F17B812EB006886C1 /* PCAppDelegate.m */; };
 		9388C07217B812EB006886C1 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9388C07117B812EB006886C1 /* Images.xcassets */; };
-		9388C07917B812EC006886C1 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9388C07817B812EC006886C1 /* XCTest.framework */; };
-		9388C07A17B812EC006886C1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9388C05F17B812EB006886C1 /* Foundation.framework */; };
-		9388C07B17B812EC006886C1 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9388C06317B812EB006886C1 /* UIKit.framework */; };
-		9388C08317B812EC006886C1 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9388C08117B812EC006886C1 /* InfoPlist.strings */; };
-		9388C08517B812EC006886C1 /* Pretty_ColorsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9388C08417B812EC006886C1 /* Pretty_ColorsTests.m */; };
 		9388C09017B8142C006886C1 /* PCColorPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9388C08F17B8142C006886C1 /* PCColorPickerViewController.m */; };
 		9388C09317B82976006886C1 /* PCColorPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9388C09217B82976006886C1 /* PCColorPickerView.m */; };
 		93CBE31B17BB30BD008BE50A /* PCCopyableLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 93CBE31A17BB30BD008BE50A /* PCCopyableLabel.m */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		9388C07C17B812EC006886C1 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 9388C05417B812EB006886C1 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 9388C05B17B812EB006886C1;
-			remoteInfo = "Pretty Colors";
-		};
-/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		93231E9717C4600B00AFA93E /* PCSavedColorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PCSavedColorViewController.h; sourceTree = "<group>"; };
 		93231E9817C4600B00AFA93E /* PCSavedColorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PCSavedColorViewController.m; sourceTree = "<group>"; };
 		93231E9A17C4640400AFA93E /* PCSavedColorCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PCSavedColorCell.h; sourceTree = "<group>"; };
 		93231E9B17C4640400AFA93E /* PCSavedColorCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PCSavedColorCell.m; sourceTree = "<group>"; };
-		9388C05C17B812EB006886C1 /* Pretty Colors.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Pretty Colors.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		9388C05C17B812EB006886C1 /* PrettyColors.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PrettyColors.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9388C05F17B812EB006886C1 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		9388C06117B812EB006886C1 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		9388C06317B812EB006886C1 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
-		9388C06717B812EB006886C1 /* Pretty Colors-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Pretty Colors-Info.plist"; sourceTree = "<group>"; };
+		9388C06717B812EB006886C1 /* PrettyColors-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "PrettyColors-Info.plist"; sourceTree = "<group>"; };
 		9388C06917B812EB006886C1 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		9388C06B17B812EB006886C1 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		9388C06D17B812EB006886C1 /* Pretty Colors-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Pretty Colors-Prefix.pch"; sourceTree = "<group>"; };
+		9388C06D17B812EB006886C1 /* PrettyColors-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PrettyColors-Prefix.pch"; sourceTree = "<group>"; };
 		9388C06E17B812EB006886C1 /* PCAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PCAppDelegate.h; sourceTree = "<group>"; };
 		9388C06F17B812EB006886C1 /* PCAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PCAppDelegate.m; sourceTree = "<group>"; };
 		9388C07117B812EB006886C1 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		9388C07717B812EC006886C1 /* Pretty ColorsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Pretty ColorsTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9388C07817B812EC006886C1 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
-		9388C08017B812EC006886C1 /* Pretty ColorsTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Pretty ColorsTests-Info.plist"; sourceTree = "<group>"; };
-		9388C08217B812EC006886C1 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		9388C08417B812EC006886C1 /* Pretty_ColorsTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Pretty_ColorsTests.m; sourceTree = "<group>"; };
 		9388C08E17B8142C006886C1 /* PCColorPickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PCColorPickerViewController.h; sourceTree = "<group>"; };
 		9388C08F17B8142C006886C1 /* PCColorPickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PCColorPickerViewController.m; sourceTree = "<group>"; };
 		9388C09117B82976006886C1 /* PCColorPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PCColorPickerView.h; sourceTree = "<group>"; };
@@ -76,24 +57,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		9388C07417B812EC006886C1 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				9388C07917B812EC006886C1 /* XCTest.framework in Frameworks */,
-				9388C07B17B812EC006886C1 /* UIKit.framework in Frameworks */,
-				9388C07A17B812EC006886C1 /* Foundation.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
 		9388C05317B812EB006886C1 = {
 			isa = PBXGroup;
 			children = (
-				9388C06517B812EB006886C1 /* Pretty Colors */,
-				9388C07E17B812EC006886C1 /* Pretty ColorsTests */,
+				9388C06517B812EB006886C1 /* PrettyColors */,
 				9388C05E17B812EB006886C1 /* Frameworks */,
 				9388C05D17B812EB006886C1 /* Products */,
 			);
@@ -102,8 +72,7 @@
 		9388C05D17B812EB006886C1 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				9388C05C17B812EB006886C1 /* Pretty Colors.app */,
-				9388C07717B812EC006886C1 /* Pretty ColorsTests.xctest */,
+				9388C05C17B812EB006886C1 /* PrettyColors.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -119,7 +88,7 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		9388C06517B812EB006886C1 /* Pretty Colors */ = {
+		9388C06517B812EB006886C1 /* PrettyColors */ = {
 			isa = PBXGroup;
 			children = (
 				9388C06E17B812EB006886C1 /* PCAppDelegate.h */,
@@ -137,34 +106,16 @@
 				9388C07117B812EB006886C1 /* Images.xcassets */,
 				9388C06617B812EB006886C1 /* Supporting Files */,
 			);
-			path = "Pretty Colors";
+			path = PrettyColors;
 			sourceTree = "<group>";
 		};
 		9388C06617B812EB006886C1 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				9388C06717B812EB006886C1 /* Pretty Colors-Info.plist */,
+				9388C06717B812EB006886C1 /* PrettyColors-Info.plist */,
 				9388C06817B812EB006886C1 /* InfoPlist.strings */,
 				9388C06B17B812EB006886C1 /* main.m */,
-				9388C06D17B812EB006886C1 /* Pretty Colors-Prefix.pch */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		9388C07E17B812EC006886C1 /* Pretty ColorsTests */ = {
-			isa = PBXGroup;
-			children = (
-				9388C08417B812EC006886C1 /* Pretty_ColorsTests.m */,
-				9388C07F17B812EC006886C1 /* Supporting Files */,
-			);
-			path = "Pretty ColorsTests";
-			sourceTree = "<group>";
-		};
-		9388C07F17B812EC006886C1 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				9388C08017B812EC006886C1 /* Pretty ColorsTests-Info.plist */,
-				9388C08117B812EC006886C1 /* InfoPlist.strings */,
+				9388C06D17B812EB006886C1 /* PrettyColors-Prefix.pch */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -172,9 +123,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		9388C05B17B812EB006886C1 /* Pretty Colors */ = {
+		9388C05B17B812EB006886C1 /* PrettyColors */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 9388C08817B812EC006886C1 /* Build configuration list for PBXNativeTarget "Pretty Colors" */;
+			buildConfigurationList = 9388C08817B812EC006886C1 /* Build configuration list for PBXNativeTarget "PrettyColors" */;
 			buildPhases = (
 				9388C05817B812EB006886C1 /* Sources */,
 				9388C05917B812EB006886C1 /* Frameworks */,
@@ -184,28 +135,10 @@
 			);
 			dependencies = (
 			);
-			name = "Pretty Colors";
+			name = PrettyColors;
 			productName = "Pretty Colors";
-			productReference = 9388C05C17B812EB006886C1 /* Pretty Colors.app */;
+			productReference = 9388C05C17B812EB006886C1 /* PrettyColors.app */;
 			productType = "com.apple.product-type.application";
-		};
-		9388C07617B812EC006886C1 /* Pretty ColorsTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 9388C08B17B812EC006886C1 /* Build configuration list for PBXNativeTarget "Pretty ColorsTests" */;
-			buildPhases = (
-				9388C07317B812EC006886C1 /* Sources */,
-				9388C07417B812EC006886C1 /* Frameworks */,
-				9388C07517B812EC006886C1 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				9388C07D17B812EC006886C1 /* PBXTargetDependency */,
-			);
-			name = "Pretty ColorsTests";
-			productName = "Pretty ColorsTests";
-			productReference = 9388C07717B812EC006886C1 /* Pretty ColorsTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
 
@@ -216,13 +149,8 @@
 				CLASSPREFIX = PC;
 				LastUpgradeCheck = 0500;
 				ORGANIZATIONNAME = "Bryan Irace";
-				TargetAttributes = {
-					9388C07617B812EC006886C1 = {
-						TestTargetID = 9388C05B17B812EB006886C1;
-					};
-				};
 			};
-			buildConfigurationList = 9388C05717B812EB006886C1 /* Build configuration list for PBXProject "Pretty Colors" */;
+			buildConfigurationList = 9388C05717B812EB006886C1 /* Build configuration list for PBXProject "PrettyColors" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -234,8 +162,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				9388C05B17B812EB006886C1 /* Pretty Colors */,
-				9388C07617B812EC006886C1 /* Pretty ColorsTests */,
+				9388C05B17B812EB006886C1 /* PrettyColors */,
 			);
 		};
 /* End PBXProject section */
@@ -247,14 +174,6 @@
 			files = (
 				9388C06A17B812EB006886C1 /* InfoPlist.strings in Resources */,
 				9388C07217B812EB006886C1 /* Images.xcassets in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		9388C07517B812EC006886C1 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				9388C08317B812EC006886C1 /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -275,37 +194,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		9388C07317B812EC006886C1 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				9388C08517B812EC006886C1 /* Pretty_ColorsTests.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		9388C07D17B812EC006886C1 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 9388C05B17B812EB006886C1 /* Pretty Colors */;
-			targetProxy = 9388C07C17B812EC006886C1 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		9388C06817B812EB006886C1 /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
 				9388C06917B812EB006886C1 /* en */,
-			);
-			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-		9388C08117B812EC006886C1 /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				9388C08217B812EC006886C1 /* en */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -389,9 +284,9 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Pretty Colors/Pretty Colors-Prefix.pch";
-				INFOPLIST_FILE = "Pretty Colors/Pretty Colors-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				GCC_PREFIX_HEADER = "PrettyColors/PrettyColors-Prefix.pch";
+				INFOPLIST_FILE = "PrettyColors/PrettyColors-Info.plist";
+				PRODUCT_NAME = PrettyColors;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -402,57 +297,17 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Pretty Colors/Pretty Colors-Prefix.pch";
-				INFOPLIST_FILE = "Pretty Colors/Pretty Colors-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				GCC_PREFIX_HEADER = "PrettyColors/PrettyColors-Prefix.pch";
+				INFOPLIST_FILE = "PrettyColors/PrettyColors-Info.plist";
+				PRODUCT_NAME = PrettyColors;
 				WRAPPER_EXTENSION = app;
-			};
-			name = Release;
-		};
-		9388C08C17B812EC006886C1 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Pretty Colors.app/Pretty Colors";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-					"$(DEVELOPER_FRAMEWORKS_DIR)",
-				);
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Pretty Colors/Pretty Colors-Prefix.pch";
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = "Pretty ColorsTests/Pretty ColorsTests-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUNDLE_LOADER)";
-				WRAPPER_EXTENSION = xctest;
-			};
-			name = Debug;
-		};
-		9388C08D17B812EC006886C1 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Pretty Colors.app/Pretty Colors";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-					"$(DEVELOPER_FRAMEWORKS_DIR)",
-				);
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Pretty Colors/Pretty Colors-Prefix.pch";
-				INFOPLIST_FILE = "Pretty ColorsTests/Pretty ColorsTests-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUNDLE_LOADER)";
-				WRAPPER_EXTENSION = xctest;
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		9388C05717B812EB006886C1 /* Build configuration list for PBXProject "Pretty Colors" */ = {
+		9388C05717B812EB006886C1 /* Build configuration list for PBXProject "PrettyColors" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				9388C08617B812EC006886C1 /* Debug */,
@@ -461,20 +316,11 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		9388C08817B812EC006886C1 /* Build configuration list for PBXNativeTarget "Pretty Colors" */ = {
+		9388C08817B812EC006886C1 /* Build configuration list for PBXNativeTarget "PrettyColors" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				9388C08917B812EC006886C1 /* Debug */,
 				9388C08A17B812EC006886C1 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		9388C08B17B812EC006886C1 /* Build configuration list for PBXNativeTarget "Pretty ColorsTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				9388C08C17B812EC006886C1 /* Debug */,
-				9388C08D17B812EC006886C1 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
