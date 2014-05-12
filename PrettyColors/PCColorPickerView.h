@@ -9,11 +9,11 @@
 // TODO: HSL/RGB display? (little 'info' thing in the corner?)
 // TODO: Auto-layout
 // TODO: Label spacing too tight
-// TODO: Collection view for saving
 // TODO: Tumblr integration
-// TODO: Update status bar color if too dark
 
 @interface PCColorPickerView : UIView
+
+@property (nonatomic, readonly) NSString *hexCodeString;
 
 - (void)randomizeBackgroundColor;
 

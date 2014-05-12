@@ -15,14 +15,15 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.backgroundColor = [UIColor whiteColor];
+    
+    self.window.rootViewController = ({
+        UINavigationController *controller = [[UINavigationController alloc] initWithRootViewController:[[PCColorPickerViewController alloc] init]];
+        controller.navigationBarHidden = YES;
+        controller.toolbarHidden = NO;
+        controller;
+    });
+    
     [self.window makeKeyAndVisible];
-    
-    UINavigationController *controller = [[UINavigationController alloc] initWithRootViewController:
-                                          [[PCColorPickerViewController alloc] init]];
-    controller.navigationBarHidden = YES;
-    controller.toolbarHidden = NO;
-    
-    self.window.rootViewController = controller;
     
     return YES;
 }

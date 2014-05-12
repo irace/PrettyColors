@@ -6,105 +6,118 @@
 //  Copyright (c) 2013 Bryan Irace. All rights reserved.
 //
 
-#import "PCColorPickerViewController.h"
-
 #import "PCColorPickerView.h"
-#import "PCSavedColorViewController.h"
+#import "PCColorPickerViewController.h"
+#import "FBKVOController.h"
 
-static CGFloat const PCColorPickerViewControllerMaxTintColorBrightness = 0.6;
-static void * PCColorPickerViewControllerKVOContext = &PCColorPickerViewControllerKVOContext;
+static CGFloat const MaxToolbarTintColorBrightness = 0.6;
 
 @interface PCColorPickerViewController()
 
-@property (nonatomic, strong) PCColorPickerView *colorPicker;
+@property (nonatomic) UIView *colorPicker;
+@property (nonatomic) FBKVOController *KVOController;
 
 @end
 
 @implementation PCColorPickerViewController
-
-#pragma mark - NSObject
-
-- (void)dealloc {
-    [self.colorPicker removeObserver:self forKeyPath:@"backgroundColor" context:PCColorPickerViewControllerKVOContext];
-}
 
 #pragma mark - UIViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.colorPicker = [[PCColorPickerView alloc] init];
+    self.navigationController.view.translatesAutoresizingMaskIntoConstraints = NO;
+    
+    self.view.translatesAutoresizingMaskIntoConstraints = NO;
+    self.view.backgroundColor = [UIColor redColor];
+    
+    self.colorPicker = [[UIView alloc] init];
+    self.colorPicker.translatesAutoresizingMaskIntoConstraints = NO;
+    self.colorPicker.backgroundColor = [UIColor greenColor];
     [self.view addSubview:self.colorPicker];
-    
-    [self backgroundColorUpdated];
-    
-    [self.colorPicker addObserver:self forKeyPath:@"backgroundColor" options:0 context:PCColorPickerViewControllerKVOContext];
-    
-//    [self.view addConstraints:@[
-//        [NSLayoutConstraint constraintWithItem:self.view attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual
-//                                        toItem:self.colorPicker attribute:NSLayoutAttributeWidth multiplier:1 constant:0],
-//
-//        [NSLayoutConstraint constraintWithItem:self.view attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual
-//                                        toItem:self.colorPicker attribute:NSLayoutAttributeHeight multiplier:1 constant:0]
-//        ]];
-    
-    UIBarButtonItem *(^barButton)(NSString *, id, SEL) = ^ (NSString *title, id target, SEL action) {
-        return [[UIBarButtonItem alloc] initWithTitle:title style:UIBarButtonItemStylePlain target:target action:action];
-    };
 
-    self.toolbarItems = @[barButton(@"Random", self.colorPicker, @selector(randomizeBackgroundColor)),
-                          [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil],
-                          barButton(@"Save", self, @selector(save))];
+    self.toolbarItems = @[
+        [[UIBarButtonItem alloc] initWithTitle:@"Random" style:UIBarButtonItemStylePlain target:self.colorPicker
+                                        action:@selector(randomizeBackgroundColor)],
+        [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil],
+        [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(share)]
+    ];
+    
+    self.KVOController = [FBKVOController controllerWithObserver:self];
+    
+    [self.KVOController observe:self.colorPicker
+                        keyPath:NSStringFromSelector(@selector(backgroundColor))
+                        options:NSKeyValueObservingOptionInitial|NSKeyValueObservingOptionNew
+                          block:^(id observer, id object, NSDictionary *change) {
+                              [self backgroundColorUpdated];
+                          }];
 }
 
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
+- (void)updateViewConstraints {
+    [super updateViewConstraints];
     
-    self.navigationController.toolbarHidden = NO;
+    [self.view addConstraint:
+     [NSLayoutConstraint constraintWithItem:self.colorPicker
+                                  attribute:NSLayoutAttributeWidth
+                                  relatedBy:NSLayoutRelationEqual
+                                     toItem:self.view
+                                  attribute:NSLayoutAttributeWidth
+                                 multiplier:1
+                                   constant:0]];
     
-    self.colorPicker.frame = self.view.bounds;
-}
-
-- (void)viewWillDisappear:(BOOL)animated {
-    [super viewWillDisappear:animated];
+    [self.view addConstraint:
+     [NSLayoutConstraint constraintWithItem:self.colorPicker
+                                  attribute:NSLayoutAttributeHeight
+                                  relatedBy:NSLayoutRelationEqual
+                                     toItem:self.view
+                                  attribute:NSLayoutAttributeHeight
+                                 multiplier:1
+                                   constant:0]];
     
-    self.navigationController.toolbarHidden = YES;
+    [self.view addConstraint:
+     [NSLayoutConstraint constraintWithItem:self.colorPicker
+                                  attribute:NSLayoutAttributeTop
+                                  relatedBy:NSLayoutRelationEqual
+                                     toItem:self.view
+                                  attribute:NSLayoutAttributeTop
+                                 multiplier:1
+                                   constant:0]];
+    
+    [self.view addConstraint:
+     [NSLayoutConstraint constraintWithItem:self.colorPicker
+                                  attribute:NSLayoutAttributeLeading
+                                  relatedBy:NSLayoutRelationEqual
+                                     toItem:self.view
+                                  attribute:NSLayoutAttributeLeading
+                                 multiplier:1
+                                   constant:0]];
 }
 
 #pragma mark - Actions
 
-- (void)save {
-    [self.navigationController pushViewController:[[PCSavedColorViewController alloc] init] animated:YES];
+- (void)share {
+//    [self presentViewController:[[UIActivityViewController alloc] initWithActivityItems:@[self.colorPicker.hexCodeString] applicationActivities:nil]
+//                       animated:YES completion:nil];
 }
 
 #pragma mark - Private
 
 - (void)backgroundColorUpdated {
-    CGFloat hue;
-    CGFloat saturation;
-    CGFloat brightness;
+    // Update toolbar tint color, enforcing a minimum brightness to ensure visibility
     
-    [self.colorPicker.backgroundColor getHue:&hue saturation:&saturation brightness:&brightness alpha:nil];
-    
-    // Update toolbar tint color
-    
-    UIColor *tintColor = [UIColor colorWithHue:hue saturation:saturation
-                                    brightness:MIN(brightness, PCColorPickerViewControllerMaxTintColorBrightness)
-                                         alpha:1];
-    
-    self.navigationController.toolbar.tintColor = tintColor;
-}
-
-#pragma mark - KVO
-
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
-    if (context == PCColorPickerViewControllerKVOContext) {
-        if (object == self.colorPicker && [keyPath isEqualToString:@"backgroundColor"]) {
-            [self backgroundColorUpdated];
-        }
-    } else {
-        [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
-    }
+    self.navigationController.toolbar.tintColor = ({
+        CGFloat hue;
+        CGFloat saturation;
+        CGFloat brightness;
+        
+        [self.colorPicker.backgroundColor getHue:&hue saturation:&saturation brightness:&brightness alpha:nil];
+        
+        UIColor *tintColor = [UIColor colorWithHue:hue
+                                        saturation:saturation
+                                        brightness:MIN(brightness, MaxToolbarTintColorBrightness)
+                                             alpha:1];
+        tintColor;
+    });
 }
 
 @end

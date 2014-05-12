@@ -7,8 +7,7 @@
 //
 
 #import "PCColorPickerView.h"
-
-#import "PCCopyableLabel.h"
+#import "FBKVOController.h"
 
 static void * PCColorPickerViewKVOContext = &PCColorPickerViewKVOContext;
 
@@ -16,9 +15,9 @@ static CGFloat const PCColorPickerViewContentSizeScale = 3;
 static CGFloat const PCColorPickerViewMinimumZoomScale = 0;
 static CGFloat const PCColorPickerViewMaximumZoomScale = 4;
 
-static CGFloat const PCColorPickerViewHexLabelAlpha = 0.25;
+static CGFloat const PCColorPickerViewHexLabelAlpha = 0.4;
 static CGFloat const PCColorPickerViewHexLabelFontSize = 60;
-static NSString * const PCColorPickerViewHexLabelFontName = @"CourierNewPS-BoldMT";
+static NSString * const PCColorPickerViewHexLabelFontName = @"Helvetica Neue";
 
 @interface PCColorPickerView() <UIScrollViewDelegate>
 
@@ -43,69 +42,38 @@ static NSString * const PCColorPickerViewHexLabelFontName = @"CourierNewPS-BoldM
 @property (nonatomic) CGFloat saturation;
 @property (nonatomic) CGFloat brightness;
 
-/// Prevent programmatic changes to content offset from triggering UIScrollViewDelegate methods
-@property (nonatomic) BOOL recalculateOnContentOffsetChange;
+@property (nonatomic) FBKVOController *KVOController;
 
 @end
 
 @implementation PCColorPickerView
 
-- (void)randomizeBackgroundColor {
-    CGFloat (^randomFloat)() = ^ {
-        // http://stackoverflow.com/questions/5172421/generate-a-random-float-between-0-and-1
-        return ((CGFloat)arc4random()/0x100000000);
-    };
-    
-    self.hue = randomFloat();
-    self.saturation = randomFloat();
-    self.brightness = randomFloat();
-    
-    self.recalculateOnContentOffsetChange = NO;
-    
-    self.scrollView.contentOffset = CGPointMake(self.hue * self.maxScrollViewXOffset,
-                                                self.saturation * self.maxScrollViewYOffset);;
-    
-    self.scrollView.zoomScale = self.brightness * self.zoomScaleRange;
-    
-    self.recalculateOnContentOffsetChange = YES;
-    
-    [self updateBackgroundColor];
-}
-
-#pragma mark - NSObject
-
-- (void)dealloc {
-    void (^unobserve)(NSString *keyPath) = ^(NSString *keyPath) {
-        [self removeObserver:self forKeyPath:keyPath context:PCColorPickerViewKVOContext];
-    };
-    
-    unobserve(@"hue");
-    unobserve(@"saturation");
-    unobserve(@"brightness");
-}
-
 #pragma mark - UIView
 
 - (id)initWithFrame:(CGRect)frame {
     if (self = [super initWithFrame:frame]) {
-        self.recalculateOnContentOffsetChange = YES;
-        
-        self.scrollView = [[UIScrollView alloc] init];
-        self.scrollView.delegate = self;
-        self.scrollView.bounces = NO;
-        self.scrollView.directionalLockEnabled = YES;
-        self.scrollView.scrollsToTop = NO;
-        self.scrollView.decelerationRate = UIScrollViewDecelerationRateFast;
+
+        self.scrollView = ({
+            UIScrollView *scrollView = [[UIScrollView alloc] init];
+            scrollView.delegate = self;
+            scrollView.directionalLockEnabled = YES;
+            scrollView.scrollsToTop = NO;
+            scrollView.decelerationRate = UIScrollViewDecelerationRateFast;
+            scrollView;
+        });
         [self addSubview:self.scrollView];
         
         self.stationaryView = [[UIView alloc] init];
         [self.scrollView addSubview:self.stationaryView];
         
-        self.zoomView = [[UIScrollView alloc] init];
-        self.zoomView.delegate = self;
-        self.zoomView.minimumZoomScale = PCColorPickerViewMinimumZoomScale;
-        self.zoomView.maximumZoomScale = PCColorPickerViewMaximumZoomScale;
-        [self.zoomView.panGestureRecognizer requireGestureRecognizerToFail:self.scrollView.panGestureRecognizer];
+        self.zoomView = ({
+            UIScrollView *scrollView = [[UIScrollView alloc] init];
+            scrollView.delegate = self;
+            scrollView.minimumZoomScale = PCColorPickerViewMinimumZoomScale;
+            scrollView.maximumZoomScale = PCColorPickerViewMaximumZoomScale;
+            [scrollView.panGestureRecognizer requireGestureRecognizerToFail:self.scrollView.panGestureRecognizer];
+            scrollView;
+        });
         [self.stationaryView addSubview:self.zoomView];
         
         self.zoomScaleRange = self.zoomView.maximumZoomScale - self.zoomView.minimumZoomScale;
@@ -113,23 +81,30 @@ static NSString * const PCColorPickerViewHexLabelFontName = @"CourierNewPS-BoldM
         self.viewForZoomingInScrollView = [[UIView alloc] init];
         [self.zoomView addSubview:self.viewForZoomingInScrollView];
         
-        self.hexLabel = [[PCCopyableLabel alloc] init];
-        self.hexLabel.font = [UIFont fontWithName:PCColorPickerViewHexLabelFontName
-                                             size:PCColorPickerViewHexLabelFontSize];
+        self.hexLabel = ({
+            UILabel *label = [[UILabel alloc] init];;
+            label.font = [UIFont fontWithName:PCColorPickerViewHexLabelFontName size:PCColorPickerViewHexLabelFontSize];
+            label.textAlignment = NSTextAlignmentCenter;
+            label;
+        });
         [self.stationaryView addSubview:self.hexLabel];
         
         self.infoButton = [UIButton buttonWithType:UIButtonTypeInfoDark];
         [self addSubview:self.infoButton];
         
         [self randomizeBackgroundColor];
+
+        _KVOController = [FBKVOController controllerWithObserver:self];
         
-        void (^observe)(NSString *keyPath) = ^(NSString *keyPath) {
-            [self addObserver:self forKeyPath:keyPath options:0 context:PCColorPickerViewKVOContext];
+        void (^updateBackgroundColorWhenKeypathChanges)(SEL selector) = ^(SEL selector) {
+            [_KVOController observe:self keyPath:NSStringFromSelector(selector) options:0 block:^(id observer, id object, NSDictionary *change) {
+                [self updateBackgroundColor];
+            }];
         };
         
-        observe(@"hue");
-        observe(@"saturation");
-        observe(@"brightness");
+        updateBackgroundColorWhenKeypathChanges(@selector(hue));
+        updateBackgroundColorWhenKeypathChanges(@selector(saturation));
+        updateBackgroundColorWhenKeypathChanges(@selector(brightness));
     }
     
     return self;
@@ -155,21 +130,38 @@ static NSString * const PCColorPickerViewHexLabelFontName = @"CourierNewPS-BoldM
     self.maxScrollViewXOffset = scrollViewContentSize.width - scrollViewSize.width;
     self.maxScrollViewYOffset = scrollViewContentSize.height - scrollViewSize.height;
     
-#warning - Initial frame is off
-    self.hexLabel.center = self.stationaryView.center;
+    [self.hexLabel sizeToFit];
+    self.hexLabel.frame = ({
+        CGRect frame = self.hexLabel.frame;
+        frame.origin.x = 0;
+        frame.origin.y = (CGRectGetHeight(self.stationaryView.frame) - CGRectGetHeight(frame))/2;
+        frame.size.width = CGRectGetWidth(self.stationaryView.frame);
+        frame;
+    });
 }
 
-#pragma mark - KVO
+#pragma mark - PCColorPickerView
 
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change
-                       context:(void *)context {
-    if (context == PCColorPickerViewKVOContext) {
-        if (object == self && [@[@"hue", @"saturation", @"brightness"] containsObject:keyPath]) {
-            [self updateBackgroundColor];
-        }
-    } else {
-        [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
-    }
+- (void)randomizeBackgroundColor {
+    CGFloat (^randomFloat)() = ^ {
+        // http://stackoverflow.com/questions/5172421/generate-a-random-float-between-0-and-1
+        return ((CGFloat)arc4random()/0x100000000);
+    };
+    
+    self.hue = randomFloat();
+    self.saturation = randomFloat();
+    self.brightness = randomFloat();
+    
+    self.scrollView.contentOffset = CGPointMake(self.hue * self.maxScrollViewXOffset,
+                                                self.saturation * self.maxScrollViewYOffset);;
+    
+    self.scrollView.zoomScale = self.brightness * self.zoomScaleRange;
+    
+    [self updateBackgroundColor];
+}
+
+- (NSString *)hexCodeString {
+    return [self.hexLabel.text substringFromIndex:1];
 }
 
 #pragma mark - Private
@@ -181,9 +173,10 @@ static NSString * const PCColorPickerViewHexLabelFontName = @"CourierNewPS-BoldM
     self.backgroundColor = color;
     
     self.hexLabel.text = [@"#" stringByAppendingString:[hexCodeForColor(color) uppercaseString]];
-    [self.hexLabel sizeToFit];
     
-    self.hexLabel.textColor = [UIColor colorWithHue:0 saturation:0 brightness:1 - round(self.brightness)
+    self.hexLabel.textColor = [UIColor colorWithHue:0
+                                         saturation:0
+                                         brightness:1 - round(self.brightness)
                                               alpha:PCColorPickerViewHexLabelAlpha];
 }
 
