@@ -15,7 +15,7 @@ static CGFloat const MaximumZoomScale = 4;
 
 static CGFloat const HexLabelAlpha = 0.5;
 static CGFloat const HexLabelFontSize = 60;
-static NSString * const HexLabelFontName = @"Helvetica Neue";
+static NSString * const HexLabelFontName = @"HelveticaNeue-Light";
 
 @interface PCOLColorPickerView() <UIScrollViewDelegate>
 
