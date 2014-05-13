@@ -1,23 +1,22 @@
 //
-//  PCAppDelegate.m
+//  PCOLAppDelegate.m
 //  Pretty Colors
 //
 //  Created by Bryan Irace on 8/11/13.
 //  Copyright (c) 2013 Bryan Irace. All rights reserved.
 //
 
-#import "PCAppDelegate.h"
+#import "PCOLAppDelegate.h"
 
-#import "PCColorPickerViewController.h"
+#import "PCOLColorPickerViewController.h"
 
-@implementation PCAppDelegate
+@implementation PCOLAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    self.window.backgroundColor = [UIColor whiteColor];
-    
     self.window.rootViewController = ({
-        UINavigationController *controller = [[UINavigationController alloc] initWithRootViewController:[[PCColorPickerViewController alloc] init]];
+        UINavigationController *controller = [[UINavigationController alloc] initWithRootViewController:
+                                              [[PCOLColorPickerViewController alloc] init]];
         controller.navigationBarHidden = YES;
         controller.toolbarHidden = NO;
         controller;

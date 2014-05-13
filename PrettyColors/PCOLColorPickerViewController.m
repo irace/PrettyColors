@@ -1,25 +1,25 @@
 //
-//  PCColorPickerViewController.m
+//  PCOLColorPickerViewController.m
 //  Pretty Colors
 //
 //  Created by Bryan Irace on 8/11/13.
 //  Copyright (c) 2013 Bryan Irace. All rights reserved.
 //
 
-#import "PCColorPickerView.h"
-#import "PCColorPickerViewController.h"
 #import "FBKVOController.h"
+#import "PCOLColorPickerView.h"
+#import "PCOLColorPickerViewController.h"
 
 static CGFloat const MaxToolbarTintColorBrightness = 0.6;
 
-@interface PCColorPickerViewController()
+@interface PCOLColorPickerViewController()
 
-@property (nonatomic) PCColorPickerView *colorPicker;
+@property (nonatomic) PCOLColorPickerView *colorPicker;
 @property (nonatomic) FBKVOController *KVOController;
 
 @end
 
-@implementation PCColorPickerViewController
+@implementation PCOLColorPickerViewController
 
 #pragma mark - UIViewController
 
@@ -28,7 +28,7 @@ static CGFloat const MaxToolbarTintColorBrightness = 0.6;
     
     self.view.translatesAutoresizingMaskIntoConstraints = YES;
     
-    self.colorPicker = [[PCColorPickerView alloc] init];
+    self.colorPicker = [[PCOLColorPickerView alloc] init];
     self.colorPicker.translatesAutoresizingMaskIntoConstraints = NO;
     [self.view addSubview:self.colorPicker];
 
@@ -83,8 +83,10 @@ static CGFloat const MaxToolbarTintColorBrightness = 0.6;
 #pragma mark - Actions
 
 - (void)share {
-    [self presentViewController:[[UIActivityViewController alloc] initWithActivityItems:@[self.colorPicker.hexCodeString] applicationActivities:nil]
-                       animated:YES completion:nil];
+    UIActivityViewController *controller = [[UIActivityViewController alloc] initWithActivityItems:@[self.colorPicker.hexCodeString]
+                                                                             applicationActivities:nil];
+    
+    [self presentViewController:controller animated:YES completion:nil];
 }
 
 #pragma mark - Private
@@ -93,10 +95,7 @@ static CGFloat const MaxToolbarTintColorBrightness = 0.6;
     // Update toolbar tint color, enforcing a minimum brightness to ensure visibility
     
     self.navigationController.toolbar.tintColor = ({
-        CGFloat hue;
-        CGFloat saturation;
-        CGFloat brightness;
-        
+        CGFloat hue, saturation, brightness;
         [self.colorPicker.backgroundColor getHue:&hue saturation:&saturation brightness:&brightness alpha:nil];
         
         UIColor *tintColor = [UIColor colorWithHue:hue

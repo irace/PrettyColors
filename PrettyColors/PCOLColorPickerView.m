@@ -1,25 +1,23 @@
 //
-//  PCColorPickerView.m
+//  PCOLColorPickerView.m
 //  Pretty Colors
 //
 //  Created by Bryan Irace on 8/11/13.
 //  Copyright (c) 2013 Bryan Irace. All rights reserved.
 //
 
-#import "PCColorPickerView.h"
 #import "FBKVOController.h"
+#import "PCOLColorPickerView.h"
 
-static void * PCColorPickerViewKVOContext = &PCColorPickerViewKVOContext;
+static CGFloat const ContentSizeScale = 3;
+static CGFloat const MinimumZoomScale = 0;
+static CGFloat const MaximumZoomScale = 4;
 
-static CGFloat const PCColorPickerViewContentSizeScale = 3;
-static CGFloat const PCColorPickerViewMinimumZoomScale = 0;
-static CGFloat const PCColorPickerViewMaximumZoomScale = 4;
+static CGFloat const HexLabelAlpha = 0.5;
+static CGFloat const HexLabelFontSize = 60;
+static NSString * const HexLabelFontName = @"Helvetica Neue";
 
-static CGFloat const PCColorPickerViewHexLabelAlpha = 0.4;
-static CGFloat const PCColorPickerViewHexLabelFontSize = 60;
-static NSString * const PCColorPickerViewHexLabelFontName = @"Helvetica Neue";
-
-@interface PCColorPickerView() <UIScrollViewDelegate>
+@interface PCOLColorPickerView() <UIScrollViewDelegate>
 
 @property (nonatomic, strong) UIScrollView *scrollView;
 
@@ -32,6 +30,8 @@ static NSString * const PCColorPickerViewHexLabelFontName = @"Helvetica Neue";
 @property (nonatomic, strong) UIView *viewForZoomingInScrollView;
 
 @property (nonatomic, strong) UILabel *hexLabel;
+@property (nonatomic, copy) NSString *hexCodeString;
+
 @property (nonatomic, strong) UIButton *infoButton;
 
 @property (nonatomic) CGFloat maxScrollViewXOffset;
@@ -46,13 +46,12 @@ static NSString * const PCColorPickerViewHexLabelFontName = @"Helvetica Neue";
 
 @end
 
-@implementation PCColorPickerView
+@implementation PCOLColorPickerView
 
 #pragma mark - UIView
 
 - (id)initWithFrame:(CGRect)frame {
     if (self = [super initWithFrame:frame]) {
-
         self.scrollView = ({
             UIScrollView *scrollView = [[UIScrollView alloc] init];
             scrollView.delegate = self;
@@ -69,8 +68,8 @@ static NSString * const PCColorPickerViewHexLabelFontName = @"Helvetica Neue";
         self.zoomView = ({
             UIScrollView *scrollView = [[UIScrollView alloc] init];
             scrollView.delegate = self;
-            scrollView.minimumZoomScale = PCColorPickerViewMinimumZoomScale;
-            scrollView.maximumZoomScale = PCColorPickerViewMaximumZoomScale;
+            scrollView.minimumZoomScale = MinimumZoomScale;
+            scrollView.maximumZoomScale = MaximumZoomScale;
             [scrollView.panGestureRecognizer requireGestureRecognizerToFail:self.scrollView.panGestureRecognizer];
             scrollView;
         });
@@ -83,7 +82,7 @@ static NSString * const PCColorPickerViewHexLabelFontName = @"Helvetica Neue";
         
         self.hexLabel = ({
             UILabel *label = [[UILabel alloc] init];;
-            label.font = [UIFont fontWithName:PCColorPickerViewHexLabelFontName size:PCColorPickerViewHexLabelFontSize];
+            label.font = [UIFont fontWithName:HexLabelFontName size:HexLabelFontSize];
             label.textAlignment = NSTextAlignmentCenter;
             label;
         });
@@ -113,6 +112,8 @@ static NSString * const PCColorPickerViewHexLabelFontName = @"Helvetica Neue";
 - (void)layoutSubviews {
     [super layoutSubviews];
 
+#warning Use AutoLayout
+    
     self.scrollView.frame = self.bounds;
     self.stationaryView.frame = self.bounds;
     
@@ -122,8 +123,8 @@ static NSString * const PCColorPickerViewHexLabelFontName = @"Helvetica Neue";
     CGSize scrollViewSize = self.scrollView.bounds.size;
     
     CGSize scrollViewContentSize = CGSizeApplyAffineTransform(scrollViewSize,
-                                                              CGAffineTransformMakeScale(PCColorPickerViewContentSizeScale,
-                                                                                         PCColorPickerViewContentSizeScale));
+                                                              CGAffineTransformMakeScale(ContentSizeScale,
+                                                                                         ContentSizeScale));
     
     self.scrollView.contentSize = scrollViewContentSize;
     
@@ -140,7 +141,7 @@ static NSString * const PCColorPickerViewHexLabelFontName = @"Helvetica Neue";
     });
 }
 
-#pragma mark - PCColorPickerView
+#pragma mark - PCOLColorPickerView
 
 - (void)randomizeBackgroundColor {
     CGFloat (^randomFloat)() = ^ {
@@ -160,33 +161,30 @@ static NSString * const PCColorPickerViewHexLabelFontName = @"Helvetica Neue";
     [self updateBackgroundColor];
 }
 
-- (NSString *)hexCodeString {
-    return [self.hexLabel.text substringFromIndex:1];
-}
-
 #pragma mark - Private
 
 - (void)updateBackgroundColor {
-    UIColor *color = [[UIColor alloc] initWithHue:self.hue saturation:self.saturation
-                                       brightness:self.brightness alpha:1];
+    self.backgroundColor = [[UIColor alloc] initWithHue:self.hue
+                                             saturation:self.saturation
+                                             brightness:self.brightness
+                                                  alpha:1];
     
-    self.backgroundColor = color;
+    self.hexCodeString = [colorToHexCodeString(self.backgroundColor) uppercaseString];
     
-    self.hexLabel.text = [@"#" stringByAppendingString:[hexCodeForColor(color) uppercaseString]];
+    self.hexLabel.text = [@"#" stringByAppendingString:self.hexCodeString];
     
     self.hexLabel.textColor = [UIColor colorWithHue:0
                                          saturation:0
                                          brightness:1 - round(self.brightness)
-                                              alpha:PCColorPickerViewHexLabelAlpha];
+                                              alpha:HexLabelAlpha];
+    
+    self.infoButton.tintColor = self.hexLabel.textColor;
 }
 
-NSString *hexCodeForColor(UIColor *color) {
+static NSString *colorToHexCodeString(UIColor *color) {
     // http://stackoverflow.com/questions/10880396/how-to-get-hexcode-based-on-the-rgb-values-in-iphoneios
     
-    CGFloat red;
-    CGFloat green;
-    CGFloat blue;
-    
+    CGFloat red, green, blue;
     [color getRed:&red green:&green blue:&blue alpha:nil];
     
     NSString *(^floatToHexString)(CGFloat) = ^(CGFloat floatValue) {
@@ -211,9 +209,11 @@ NSString *hexCodeForColor(UIColor *color) {
             
             // Ensure stationary view frame does not change
             
-            CGRect stationaryViewFrame = self.stationaryView.frame;
-            stationaryViewFrame.origin = CGPointMake(xOffset, yOffset);
-            self.stationaryView.frame = stationaryViewFrame;
+            self.stationaryView.frame = ({
+                CGRect frame = self.stationaryView.frame;
+                frame.origin = CGPointMake(xOffset, yOffset);
+                frame;
+            });
         }
     }
 }
