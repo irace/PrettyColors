@@ -14,7 +14,7 @@ static CGFloat const MaxToolbarTintColorBrightness = 0.6;
 
 @interface PCColorPickerViewController()
 
-@property (nonatomic) UIView *colorPicker;
+@property (nonatomic) PCColorPickerView *colorPicker;
 @property (nonatomic) FBKVOController *KVOController;
 
 @end
@@ -26,15 +26,42 @@ static CGFloat const MaxToolbarTintColorBrightness = 0.6;
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.navigationController.view.translatesAutoresizingMaskIntoConstraints = NO;
+    self.view.translatesAutoresizingMaskIntoConstraints = YES;
     
-    self.view.translatesAutoresizingMaskIntoConstraints = NO;
-    self.view.backgroundColor = [UIColor redColor];
-    
-    self.colorPicker = [[UIView alloc] init];
+    self.colorPicker = [[PCColorPickerView alloc] init];
     self.colorPicker.translatesAutoresizingMaskIntoConstraints = NO;
-    self.colorPicker.backgroundColor = [UIColor greenColor];
     [self.view addSubview:self.colorPicker];
+
+    [self.view addConstraints:@[
+     [NSLayoutConstraint constraintWithItem:self.colorPicker
+                                  attribute:NSLayoutAttributeLeft
+                                  relatedBy:NSLayoutRelationEqual
+                                     toItem:self.view
+                                  attribute:NSLayoutAttributeLeft
+                                 multiplier:1
+                                   constant:0],
+     [NSLayoutConstraint constraintWithItem:self.colorPicker
+                                  attribute:NSLayoutAttributeRight
+                                  relatedBy:NSLayoutRelationEqual
+                                     toItem:self.view
+                                  attribute:NSLayoutAttributeRight
+                                 multiplier:1
+                                   constant:0],
+     [NSLayoutConstraint constraintWithItem:self.colorPicker
+                                  attribute:NSLayoutAttributeTop
+                                  relatedBy:NSLayoutRelationEqual
+                                     toItem:self.view
+                                  attribute:NSLayoutAttributeTop
+                                 multiplier:1
+                                   constant:0],
+     [NSLayoutConstraint constraintWithItem:self.colorPicker
+                                  attribute:NSLayoutAttributeBottom
+                                  relatedBy:NSLayoutRelationEqual
+                                     toItem:self.view
+                                  attribute:NSLayoutAttributeBottom
+                                 multiplier:1
+                                   constant:0]
+     ]];
 
     self.toolbarItems = @[
         [[UIBarButtonItem alloc] initWithTitle:@"Random" style:UIBarButtonItemStylePlain target:self.colorPicker
@@ -53,51 +80,11 @@ static CGFloat const MaxToolbarTintColorBrightness = 0.6;
                           }];
 }
 
-- (void)updateViewConstraints {
-    [super updateViewConstraints];
-    
-    [self.view addConstraint:
-     [NSLayoutConstraint constraintWithItem:self.colorPicker
-                                  attribute:NSLayoutAttributeWidth
-                                  relatedBy:NSLayoutRelationEqual
-                                     toItem:self.view
-                                  attribute:NSLayoutAttributeWidth
-                                 multiplier:1
-                                   constant:0]];
-    
-    [self.view addConstraint:
-     [NSLayoutConstraint constraintWithItem:self.colorPicker
-                                  attribute:NSLayoutAttributeHeight
-                                  relatedBy:NSLayoutRelationEqual
-                                     toItem:self.view
-                                  attribute:NSLayoutAttributeHeight
-                                 multiplier:1
-                                   constant:0]];
-    
-    [self.view addConstraint:
-     [NSLayoutConstraint constraintWithItem:self.colorPicker
-                                  attribute:NSLayoutAttributeTop
-                                  relatedBy:NSLayoutRelationEqual
-                                     toItem:self.view
-                                  attribute:NSLayoutAttributeTop
-                                 multiplier:1
-                                   constant:0]];
-    
-    [self.view addConstraint:
-     [NSLayoutConstraint constraintWithItem:self.colorPicker
-                                  attribute:NSLayoutAttributeLeading
-                                  relatedBy:NSLayoutRelationEqual
-                                     toItem:self.view
-                                  attribute:NSLayoutAttributeLeading
-                                 multiplier:1
-                                   constant:0]];
-}
-
 #pragma mark - Actions
 
 - (void)share {
-//    [self presentViewController:[[UIActivityViewController alloc] initWithActivityItems:@[self.colorPicker.hexCodeString] applicationActivities:nil]
-//                       animated:YES completion:nil];
+    [self presentViewController:[[UIActivityViewController alloc] initWithActivityItems:@[self.colorPicker.hexCodeString] applicationActivities:nil]
+                       animated:YES completion:nil];
 }
 
 #pragma mark - Private
