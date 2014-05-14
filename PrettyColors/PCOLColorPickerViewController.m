@@ -75,7 +75,7 @@ static CGFloat const MaxToolbarTintColorBrightness = 0.6;
     self.toolbarItems = @[
         [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"904-shuffle"] style:UIBarButtonItemStylePlain target:self.colorPicker action:@selector(randomizeBackgroundColor)],
         [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil],
-        [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemTrash target:nil action:nil],
+        [[UIBarButtonItem alloc] initWithCustomView:[UIButton buttonWithType:UIButtonTypeInfoDark]],
         [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil],
         [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(share)]
     ];

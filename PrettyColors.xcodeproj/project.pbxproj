@@ -22,7 +22,7 @@
 /* Begin PBXFileReference section */
 		26ECE672B86B4AADBDDEC2FE /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		59F261D88F6A447EBE374D39 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
-		9388C05C17B812EB006886C1 /* PrettyColors.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PrettyColors.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		9388C05C17B812EB006886C1 /* Pretty Colors.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Pretty Colors.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9388C05F17B812EB006886C1 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		9388C06117B812EB006886C1 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		9388C06317B812EB006886C1 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -68,7 +68,7 @@
 		9388C05D17B812EB006886C1 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				9388C05C17B812EB006886C1 /* PrettyColors.app */,
+				9388C05C17B812EB006886C1 /* Pretty Colors.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -130,7 +130,7 @@
 			);
 			name = PrettyColors;
 			productName = "Pretty Colors";
-			productReference = 9388C05C17B812EB006886C1 /* PrettyColors.app */;
+			productReference = 9388C05C17B812EB006886C1 /* Pretty Colors.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -310,7 +310,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PrettyColors/PrettyColors-Prefix.pch";
 				INFOPLIST_FILE = "PrettyColors/PrettyColors-Info.plist";
-				PRODUCT_NAME = PrettyColors;
+				PRODUCT_NAME = "Pretty Colors";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -324,7 +324,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PrettyColors/PrettyColors-Prefix.pch";
 				INFOPLIST_FILE = "PrettyColors/PrettyColors-Info.plist";
-				PRODUCT_NAME = PrettyColors;
+				PRODUCT_NAME = "Pretty Colors";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
