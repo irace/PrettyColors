@@ -8,6 +8,7 @@
 
 @interface PCOLColorPickerView : UIView
 
+@property (nonatomic, readonly) UIColor *labelColor;
 @property (nonatomic, strong, readonly) UIButton *infoButton;
 @property (nonatomic, copy, readonly) NSString *hexCodeString;
 

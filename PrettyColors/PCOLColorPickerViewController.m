@@ -62,10 +62,20 @@ static CGFloat const MaxToolbarTintColorBrightness = 0.6;
                                  multiplier:1
                                    constant:0]
      ]];
+    
+//    self.navigationController.toolbar.barTintColor = nil;
+//    self.navigationController.toolbar.translucent = NO;
+    
+    [self.navigationController.toolbar setBackgroundImage:[UIImage new] forToolbarPosition:UIToolbarPositionAny barMetrics:UIBarMetricsDefault];
+    
+//    [self.navigationController.toolbar setBackgroundColor:[UIColor clearColor]];
+    
+    [self.navigationController.toolbar setShadowImage:[UIImage new] forToolbarPosition:UIToolbarPositionAny];
 
     self.toolbarItems = @[
-        [[UIBarButtonItem alloc] initWithTitle:@"Random" style:UIBarButtonItemStylePlain target:self.colorPicker
-                                        action:@selector(randomizeBackgroundColor)],
+        [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"904-shuffle"] style:UIBarButtonItemStylePlain target:self.colorPicker action:@selector(randomizeBackgroundColor)],
+        [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil],
+        [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemTrash target:nil action:nil],
         [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil],
         [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(share)]
     ];
@@ -95,14 +105,15 @@ static CGFloat const MaxToolbarTintColorBrightness = 0.6;
     // Update toolbar tint color, enforcing a minimum brightness to ensure visibility
     
     self.navigationController.toolbar.tintColor = ({
-        CGFloat hue, saturation, brightness;
-        [self.colorPicker.backgroundColor getHue:&hue saturation:&saturation brightness:&brightness alpha:nil];
-        
-        UIColor *tintColor = [UIColor colorWithHue:hue
-                                        saturation:saturation
-                                        brightness:MIN(brightness, MaxToolbarTintColorBrightness)
-                                             alpha:1];
-        tintColor;
+//        CGFloat hue, saturation, brightness;
+//        [self.colorPicker.backgroundColor getHue:&hue saturation:&saturation brightness:&brightness alpha:nil];
+//        
+//        UIColor *tintColor = [UIColor colorWithHue:hue
+//                                        saturation:saturation
+//                                        brightness:MIN(brightness, MaxToolbarTintColorBrightness)
+//                                             alpha:1];
+//        tintColor;
+        self.colorPicker.labelColor;
     });
 }
 

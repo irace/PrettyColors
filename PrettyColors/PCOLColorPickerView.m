@@ -15,7 +15,7 @@ static CGFloat const MaximumZoomScale = 4;
 
 static CGFloat const HexLabelAlpha = 0.5;
 static CGFloat const HexLabelFontSize = 60;
-static NSString * const HexLabelFontName = @"HelveticaNeue-Light";
+static NSString * const HexLabelFontName = @"Avenir-Light";
 
 @interface PCOLColorPickerView() <UIScrollViewDelegate>
 
@@ -89,7 +89,7 @@ static NSString * const HexLabelFontName = @"HelveticaNeue-Light";
         [self.stationaryView addSubview:self.hexLabel];
         
         self.infoButton = [UIButton buttonWithType:UIButtonTypeInfoDark];
-        [self addSubview:self.infoButton];
+//        [self addSubview:self.infoButton];
         
         [self randomizeBackgroundColor];
 
@@ -142,6 +142,10 @@ static NSString * const HexLabelFontName = @"HelveticaNeue-Light";
 }
 
 #pragma mark - PCOLColorPickerView
+
+- (UIColor *)labelColor {
+    return self.hexLabel.textColor;
+}
 
 - (void)randomizeBackgroundColor {
     CGFloat (^randomFloat)() = ^ {
